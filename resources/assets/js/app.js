@@ -3,6 +3,10 @@ import './bootstrap.js';
 import Echo from 'laravel-echo';
 import Vue from 'vue';
 
+import Vue2Filters from 'vue2-filters';
+
+Vue.use(Vue2Filters);
+
 import Dashboard from './components/Dashboard';
 import Calendar from './components/Calendar';
 import Github from './components/Github';
@@ -14,6 +18,7 @@ import Tasks from './components/Tasks';
 import TimeWeather from './components/TimeWeather';
 import Twitter from './components/Twitter';
 import Uptime from './components/Uptime';
+import CryptoCoin from './components/CryptoCoin';
 
 new Vue({
 
@@ -31,6 +36,7 @@ new Vue({
         TimeWeather,
         Twitter,
         Uptime,
+        CryptoCoin,
     },
 
     created() {
@@ -44,7 +50,7 @@ new Vue({
         if (window.dashboard.usingNodeServer) {
             options = {
                 broadcaster: 'socket.io',
-                host: 'http://dashboard.spatie.be:6001',
+                host: 'http://dashboard.test:6001',
             };
         }
 
