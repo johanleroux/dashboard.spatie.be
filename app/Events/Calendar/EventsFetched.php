@@ -9,8 +9,15 @@ class EventsFetched extends DashboardEvent
     /** @var array */
     public $events;
 
-    public function __construct(array $events)
+    /** @var string */
+    public $calendarTitle;
+
+    public function __construct(array $events, string $calendarTitle = null)
     {
         $this->events = $events;
+
+        if ($calendarTitle) {
+            $this->calendarTitle = $calendarTitle;
+        }
     }
 }

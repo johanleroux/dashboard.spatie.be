@@ -1,7 +1,7 @@
 <template>
     <tile :position="position" modifiers="overflow">
         <section class="calendar">
-            <h1 class="calendar__title">Upcoming</h1>
+            <h1 class="calendar__title">{{ title }}</h1>
             <ul class="calendar__events">
                 <li v-for="event in events" class="calendar__event">
                     <h2 class="calendar__event__title">{{ event.name }}</h2>
@@ -26,11 +26,12 @@
 
         mixins: [echo, saveState],
 
-        props: ['position'],
+        props: ['position', 'calendar'],
 
         data() {
             return {
                 events: [],
+                calendarTitle: '',
             };
         },
 
@@ -40,15 +41,34 @@
             getEventHandlers() {
                 return {
                     'Calendar.EventsFetched': response => {
-                        this.events = response.events;
+                        if (this.calendar === response.calendarTitle) {
+                            this.events = response.events;
+                            this.calendarTitle = response.calendarTitle;
+                        } else if (!this.calendar) {
+                            this.events = response.events;
+                            this.calendarTitle = '';
+                        }
                     },
                 };
             },
 
             getSaveStateConfig() {
+                let cacheKey = 'calendar';
+
+                if (this.calendar)
+                    cacheKey = cacheKey + '_' + this.calendar;
+
                 return {
-                    cacheKey: 'calendar',
+                    cacheKey: cacheKey,
                 };
+            },
+        },
+
+        computed: {
+            title() {
+                if (this.calendarTitle)
+                    return this.calendarTitle;
+                return 'Upcoming';
             },
         },
     };

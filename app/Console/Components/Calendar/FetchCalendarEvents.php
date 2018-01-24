@@ -2,21 +2,21 @@
 
 namespace App\Console\Components\Calendar;
 
-use DateTime;
+use App\Events\Calendar\EventsFetched;
 use Carbon\Carbon;
+use DateTime;
 use Illuminate\Console\Command;
 use Spatie\GoogleCalendar\Event;
-use App\Events\Calendar\EventsFetched;
 
 class FetchCalendarEvents extends Command
 {
-    protected $signature = 'dashboard:fetch-calendar-events';
+    protected $signature = 'dashboard:fetch-calendar-events {--calendar=} {--calendarId=}';
 
     protected $description = 'Fetch events from a Google Calendar';
 
     public function handle()
     {
-        $events = collect(Event::get())
+        $events = collect(Event::get(null, null, [], $this->option('calendarId')))
             ->map(function (Event $event) {
                 $sortDate = $event->getSortDate();
 
@@ -28,6 +28,6 @@ class FetchCalendarEvents extends Command
             ->unique('name')
             ->toArray();
 
-        event(new EventsFetched($events));
+        event(new EventsFetched($events, $this->option('calendar')));
     }
 }
