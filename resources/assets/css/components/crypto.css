@@ -1,0 +1,47 @@
+.crypto {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.crypto__content {
+    text-align: center;
+}
+
+.crypto__title {
+    display: none;
+    color: var(--gray-light);
+    text-transform: uppercase;
+    font-size: var(--font-size-xs);
+}
+
+.crypto__icon {
+    display: none;
+    color: var(--gray-light);
+    font-size: var(--font-size-m);
+}
+
+.crypto__amount {
+    display: block;
+    padding: .1em 0;
+    color: var(--blue-light);
+    letter-spacing: .05em;
+    font-weight: var(--font-weight-light);
+    font-size: var(--font-size-l);
+    line-height: 1;
+}
+
+.crypto__positive {
+    color: var(--green);
+}
+
+.crypto__negative {
+    color: var(--red);
+}
+
+@media (min-height: 60em) {
+    .crypto__icon,
+    .crypto__title {
+        display: block;
+    }
+}

@@ -1,14 +1,17 @@
 <template>
     <tile :position="position">
-        <section class="time-weather">
-            <time class="time-weather__content">
-                <span class="time-weather__weather">
-                    <span class="time-weather__weather__description">
-                        <i class="cf" v-bind:class="icon"></i>
-                    </span>
+        <section class="crypto">
+            <time class="crypto__content">
+                <span class="crypto__icon">
+                    <i class="cf" v-bind:class="icon"></i>
                 </span>
-                <span class="time-weather__date">{{ title }}</span>
-                <span class="time-weather__time">{{ value.price_usd | currency }}</span>
+                <span class="crypto__title">{{ title }}</span>
+                <span class="crypto__amount">{{ value.price_usd | currency }}</span>
+                <span class="crypto__date">
+                    <span :class="change1h">{{ value.percent_change_1h }}%</span> | 
+                    <span :class="change24h">{{ value.percent_change_24h }}%</span> | 
+                    <span :class="change7d">{{ value.percent_change_7d }}%</span>
+                </span>
             </time>
         </section>
     </tile>
@@ -37,7 +40,7 @@
 
         created() {
             this.fetchCoin();
-            setInterval(this.fetchCoin, 10 * 30 * 1000);
+            setInterval(this.fetchCoin, 10 * 30 * 1000); // 5 mins
         },
 
         methods: {
@@ -45,6 +48,27 @@
                 const coin = await crypto.coinData(this.coin);
 
                 this.value = coin;
+            },
+
+            cryptoChange(value) {
+                if (Number.parseFloat(value) > 0)
+                    return 'crypto__positive';
+                
+                return 'crypto__negative';
+            },
+        },
+
+        computed: {
+            change1h() {
+                return this.cryptoChange(this.value.percent_change_1h);
+            },
+            
+            change24h() {
+                return this.cryptoChange(this.value.percent_change_24h);
+            },
+            
+            change7d() {
+                return this.cryptoChange(this.value.percent_change_7d);
             },
         },
     };
