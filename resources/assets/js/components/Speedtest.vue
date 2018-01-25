@@ -35,8 +35,7 @@
         methods: {
             async speedtest() {
                 const test = SpeedTest({
-                    maxTime: 5000,
-                    proxy : 'http://41.161.86.43:3128',
+                    maxTime: 5000
                 });
                 
                 test.on('data', data => {
