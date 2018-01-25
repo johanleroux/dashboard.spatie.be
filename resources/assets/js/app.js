@@ -19,6 +19,7 @@ import TimeWeather from './components/TimeWeather';
 import Twitter from './components/Twitter';
 import Uptime from './components/Uptime';
 import CryptoCoin from './components/CryptoCoin';
+import Speedtest from './components/Speedtest';
 
 new Vue({
 
@@ -37,6 +38,7 @@ new Vue({
         Twitter,
         Uptime,
         CryptoCoin,
+        Speedtest,
     },
 
     created() {
